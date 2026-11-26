@@ -2,206 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#020914">
-<title>JARVIS V2</title>
+<title>JARVIS V3</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
- min-height:100vh;background:radial-gradient(circle at center,#063b5a 0%,#020914 42%,#000308 100%);
- color:#dff8ff;font-family:Arial,sans-serif;overflow-x:hidden
-}
-.app{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:22px 16px}
-.title{font-size:30px;letter-spacing:10px;color:#00d9ff;text-shadow:0 0 10px #00d9ff,0 0 30px #008cff;margin-top:8px}
-.status{margin-top:7px;font-size:12px;letter-spacing:4px;color:#73eaff}
-.hud{position:relative;width:min(72vw,310px);height:min(72vw,310px);margin-top:28px;display:flex;justify-content:center;align-items:center}
-.ring{position:absolute;border-radius:50%;border:2px solid #00cfff;box-shadow:0 0 10px #00cfff,inset 0 0 15px #008cff}
+body{min-height:100vh;background:radial-gradient(circle at center,#073e5d,#020914 45%,#000308);color:#dff8ff;font-family:Arial,sans-serif}
+.app{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 14px}
+.title{font-size:29px;letter-spacing:9px;color:#00d9ff;text-shadow:0 0 12px #00d9ff,0 0 30px #008cff}
+.status{margin-top:6px;font-size:11px;letter-spacing:3px;color:#73eaff}
+.hud{position:relative;width:min(68vw,280px);height:min(68vw,280px);margin:22px 0 16px;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;border:2px solid #00cfff;border-radius:50%;box-shadow:0 0 10px #00cfff,inset 0 0 15px #008cff}
 .r1{width:100%;height:100%;animation:spin 12s linear infinite}
-.r2{width:82%;height:82%;border-style:dashed;animation:spinReverse 8s linear infinite}
-.r3{width:64%;height:64%;animation:pulse 2s infinite}
-.core{width:35%;height:35%;border-radius:50%;background:radial-gradient(circle,#bfffff 0%,#00d9ff 25%,#006cff 60%,#00152a 100%);box-shadow:0 0 20px #00eaff,0 0 60px #008cff,0 0 100px #0066ff;animation:pulse 1.5s infinite}
-.panel{width:100%;max-width:520px;margin-top:20px;min-height:105px;padding:16px;border:1px solid #008cff;border-radius:14px;background:rgba(0,20,40,.7);box-shadow:0 0 20px rgba(0,180,255,.25)}
-#output{font-size:16px;line-height:1.55;word-wrap:break-word}
-.controls{width:100%;max-width:520px;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{min-height:50px;border-radius:12px;border:1px solid #00cfff;background:rgba(0,100,180,.2);color:#dff8ff;font-size:14px;font-weight:bold;box-shadow:0 0 15px rgba(0,190,255,.2)}
-button:active{background:rgba(0,190,255,.45);transform:scale(.97)}
-.inputRow{width:100%;max-width:520px;display:flex;gap:8px;margin-top:10px}
-input{flex:1;min-width:0;padding:14px;border-radius:12px;border:1px solid #008cff;background:rgba(0,15,30,.8);color:#fff;font-size:15px;outline:none}
-.small{font-size:11px;color:#77cfe5;margin-top:10px;text-align:center}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes spinReverse{from{transform:rotate(360deg)}to{transform:rotate(0)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.r2{width:80%;height:80%;border-style:dashed;animation:rev 8s linear infinite}
+.r3{width:60%;height:60%;animation:pulse 2s infinite}
+.core{width:32%;height:32%;border-radius:50%;background:radial-gradient(circle,#fff,#00d9ff 28%,#006cff 62%,#00152a);box-shadow:0 0 20px #00eaff,0 0 60px #008cff;animation:pulse 1.5s infinite}
+.chat{width:100%;max-width:560px;height:230px;overflow:auto;border:1px solid #008cff;border-radius:15px;background:rgba(0,15,30,.72);padding:13px;box-shadow:0 0 20px rgba(0,180,255,.2)}
+.msg{padding:9px 11px;margin:7px 0;border-radius:10px;line-height:1.45;word-wrap:break-word}
+.user{background:rgba(0,120,190,.22);border:1px solid rgba(0,207,255,.35)}
+.jarvis{background:rgba(0,50,80,.32);border:1px solid rgba(0,140,255,.3)}
+.controls{width:100%;max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+button{min-height:48px;border-radius:11px;border:1px solid #00cfff;background:rgba(0,100,180,.2);color:#dff8ff;font-weight:bold}
+button:active{transform:scale(.97);background:rgba(0,190,255,.4)}
+.row{width:100%;max-width:560px;display:flex;gap:7px;margin-top:9px}
+input{flex:1;min-width:0;padding:13px;border-radius:11px;border:1px solid #008cff;background:#00101f;color:white;outline:none;font-size:15px}
+.send{width:90px}
+.hint{margin-top:8px;font-size:11px;color:#72c9df;text-align:center}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes rev{from{transform:rotate(360deg)}to{transform:rotate(0)}}@keyframes pulse{50%{transform:scale(1.07)}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="title">JARVIS</div>
-  <div class="status" id="status">SYSTEM ONLINE</div>
+<div class="title">JARVIS</div>
+<div class="status" id="status">V3 • SYSTEM ONLINE</div>
 
-  <div class="hud">
-    <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-    <div class="core"></div>
-  </div>
+<div class="hud"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div></div>
 
-  <div class="panel">
-    <div id="output">Hello. I am JARVIS.<br>Tap SPEAK or type a command.</div>
-  </div>
+<div class="chat" id="chat">
+<div class="msg jarvis"><b>JARVIS:</b> Hello. I am ready. Speak or type a command.</div>
+</div>
 
-  <div class="controls">
-    <button onclick="startListening()">🎙️ SPEAK</button>
-    <button onclick="jarvisSearch()">🌐 SEARCH</button>
-    <button onclick="openYouTube()">▶️ YOUTUBE</button>
-    <button onclick="openGoogle()">🔎 GOOGLE</button>
-  </div>
+<div class="controls">
+<button onclick="listen()">🎙️ SPEAK</button>
+<button onclick="searchPrompt()">🌐 SEARCH</button>
+<button onclick="openYouTube()">▶️ YOUTUBE</button>
+<button onclick="clearChat()">🧹 CLEAR</button>
+</div>
 
-  <div class="inputRow">
-    <input id="commandInput" placeholder="Type a command..." onkeydown="if(event.key==='Enter') runTypedCommand()">
-    <button onclick="runTypedCommand()">SEND</button>
-  </div>
-  <div class="small">Try: “hello”, “what is the time?”, “open youtube”, “search weather”, “who are you”</div>
+<div class="row">
+<input id="input" placeholder="Ask JARVIS..." onkeydown="if(event.key==='Enter')send()">
+<button class="send" onclick="send()">SEND</button>
+</div>
+<div class="hint">Try: hello • time • date • open youtube • search AI • who are you • Marathi/Hindi commands</div>
 </div>
 
 <script>
-const output=document.getElementById("output");
-const statusText=document.getElementById("status");
-const input=document.getElementById("commandInput");
-
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+const chat=document.getElementById("chat"),input=document.getElementById("input"),status=document.getElementById("status");
 let recognition=null;
 
-if(SpeechRecognition){
-  recognition=new SpeechRecognition();
-  recognition.continuous=false;
-  recognition.interimResults=false;
-  recognition.lang="en-IN";
-
-  recognition.onstart=()=>{
-    statusText.innerText="LISTENING...";
-    output.innerText="I am listening...";
-  };
-
-  recognition.onresult=(event)=>{
-    const command=event.results[0][0].transcript.trim();
-    processCommand(command);
-  };
-
-  recognition.onerror=()=>{
-    statusText.innerText="SYSTEM ONLINE";
-    output.innerText="I could not hear you. Please try again.";
-  };
-
-  recognition.onend=()=>statusText.innerText="SYSTEM ONLINE";
+function add(who,text,cls){
+ const d=document.createElement("div");d.className="msg "+cls;
+ const b=document.createElement("b");b.textContent=who+": ";
+ d.appendChild(b);d.appendChild(document.createTextNode(text));
+ chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
 }
-
-function startListening(){
-  if(!recognition){
-    output.innerText="Speech recognition is not supported in this browser. Please type your command.";
-    return;
-  }
-  try{ recognition.start(); }catch(e){}
-}
-
-function runTypedCommand(){
-  const command=input.value.trim();
-  if(!command)return;
-  input.value="";
-  processCommand(command);
-}
-
-function show(command,response){
-  output.innerHTML="<b>You:</b> "+escapeHTML(command)+"<br><br><b>JARVIS:</b> "+response;
-  speak(stripHTML(response));
-}
-
-function processCommand(command){
-  const text=command.toLowerCase().trim();
-  let response="";
-
-  if(text.includes("hello")||text.includes("hi")||text.includes("hey")||text.includes("नमस्कार")||text.includes("हॅलो")||text.includes("हलो")){
-    response="Hello. I am JARVIS. How can I assist you?";
-  }
-  else if(text.includes("who are you")||text.includes("तू कोण")||text.includes("तुम कौन")){
-    response="I am JARVIS, your personal AI assistant.";
-  }
-  else if(text.includes("time")||text.includes("वेळ")||text.includes("समय")){
-    response="The current time is "+new Date().toLocaleTimeString();
-  }
-  else if(text.includes("date")||text.includes("तारीख")||text.includes("आजची तारीख")){
-    response="Today is "+new Date().toLocaleDateString();
-  }
-  else if(text.includes("youtube")||text.includes("यूट्यूब")){
-    response="Opening YouTube.";
-    show(command,response);
-    setTimeout(openYouTube,500);
-    return;
-  }
-  else if(text.includes("google")||text.includes("गूगल")){
-    response="Opening Google.";
-    show(command,response);
-    setTimeout(openGoogle,500);
-    return;
-  }
-  else if(text.startsWith("search ")||text.startsWith("find ")||text.includes("शोध")){
-    let query=command.replace(/^search\s+/i,"").replace(/^find\s+/i,"").trim();
-    if(!query) query=prompt("What should I search?");
-    if(query){
-      response="Searching the web for "+escapeHTML(query)+".";
-      show(command,response);
-      setTimeout(()=>webSearch(query),500);
-      return;
-    }
-  }
-  else if(text.includes("good morning")){
-    response="Good morning. JARVIS systems are online and ready.";
-  }
-  else if(text.includes("good night")){
-    response="Good night. JARVIS is standing by.";
-  }
-  else if(text.includes("thank")){
-    response="You're welcome. Always at your service.";
-  }
-  else if(text.includes("how are you")){
-    response="All systems are operational. Thank you for asking.";
-  }
-  else if(text.includes("clear")||text.includes("reset")){
-    output.innerHTML="Hello. I am JARVIS.<br>Ready for your next command.";
-    return;
-  }
-  else{
-    response="I heard you say: "+escapeHTML(command)+". This command is not connected to my AI brain yet.";
-  }
-
-  show(command,response);
-}
-
-function openYouTube(){
-  speak("Opening YouTube.");
-  window.open("https://www.youtube.com","_blank");
-}
-function openGoogle(){
-  speak("Opening Google.");
-  window.open("https://www.google.com","_blank");
-}
-function webSearch(query){
-  window.open("https://www.google.com/search?q="+encodeURIComponent(query),"_blank");
-}
-function jarvisSearch(){
-  const query=prompt("What should I search?");
-  if(query)webSearch(query);
-}
+function reply(text){add("JARVIS",text,"jarvis");speak(text)}
 function speak(text){
-  if(!("speechSynthesis" in window))return;
-  window.speechSynthesis.cancel();
-  const voice=new SpeechSynthesisUtterance(text);
-  voice.lang="en-IN"; voice.rate=.9; voice.pitch=.9; voice.volume=1;
-  window.speechSynthesis.speak(voice);
+ if(!("speechSynthesis" in window))return;
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);
+ u.lang="en-IN";u.rate=.9;u.pitch=.9;speechSynthesis.speak(u);
 }
-function stripHTML(text){
-  const d=document.createElement("div"); d.innerHTML=text; return d.textContent||d.innerText||"";
+function send(){const t=input.value.trim();if(!t)return;input.value="";process(t)}
+function listen(){
+ if(!recognition){add("JARVIS","Voice recognition is not available in this browser. Use the text box.","jarvis");return}
+ try{recognition.start()}catch(e){}
 }
-function escapeHTML(text){
-  return String(text).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+if(window.SpeechRecognition||window.webkitSpeechRecognition){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ recognition=new SR();recognition.continuous=false;recognition.interimResults=false;recognition.lang="en-IN";
+ recognition.onstart=()=>{status.textContent="V3 • LISTENING...";add("JARVIS","I am listening...","jarvis")}
+ recognition.onresult=e=>{const t=e.results[0][0].transcript;process(t)}
+ recognition.onerror=()=>{status.textContent="V3 • SYSTEM ONLINE";reply("I could not hear you. Please try again.")}
+ recognition.onend=()=>status.textContent="V3 • SYSTEM ONLINE";
 }
+function process(command){
+ add("YOU",command,"user");
+ const t=command.toLowerCase().trim();
+
+ if(/^(hello|hi|hey|नमस्कार|हॅलो|हलो)/.test(t)){reply("Hello. I am JARVIS. How can I assist you?");return}
+ if(t.includes("who are you")||t.includes("तू कोण")||t.includes("तुम कौन")){reply("I am JARVIS, your personal AI assistant.");return}
+ if(t.includes("time")||t.includes("वेळ")||t.includes("समय")){reply("The current time is "+new Date().toLocaleTimeString());return}
+ if(t.includes("date")||t.includes("तारीख")||t.includes("आजची तारीख")){reply("Today is "+new Date().toLocaleDateString());return}
+ if(t.includes("youtube")||t.includes("यूट्यूब")){reply("Opening YouTube.");setTimeout(openYouTube,500);return}
+ if(t.includes("google")||t.includes("गूगल")){reply("Opening Google.");setTimeout(()=>window.open("https://www.google.com","_blank"),500);return}
+ if(t.startsWith("search ")||t.startsWith("find ")||t.includes("शोध")){
+   let q=command.replace(/^(search|find)\s+/i,"").trim();
+   if(!q)q=prompt("What should I search?");
+   if(q){reply("Searching the web for "+q);setTimeout(()=>window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank"),500)}
+   return;
+ }
+ if(t.includes("good morning")){reply("Good morning. All JARVIS systems are online.");return}
+ if(t.includes("good night")){reply("Good night. JARVIS is standing by.");return}
+ if(t.includes("thank")){reply("You're welcome. Always at your service.");return}
+ if(t.includes("how are you")){reply("All systems are operational.");return}
+
+ // Backend-ready AI hook. Keep the API key OUT of this file.
+ reply("I understand your command. My secure AI brain can be connected to a backend next.");
+}
+function openYouTube(){window.open("https://www.youtube.com","_blank")}
+function searchPrompt(){const q=prompt("What should I search?");if(q)window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank")}
+function clearChat(){chat.innerHTML='<div class="msg jarvis"><b>JARVIS:</b> Chat cleared. I am ready.</div>'}
 </script>
 </body>
 </html>
