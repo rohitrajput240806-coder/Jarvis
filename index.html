@@ -1,399 +1,207 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#020914">
-<title>JARVIS</title>
-
+<title>JARVIS V2</title>
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ min-height:100vh;background:radial-gradient(circle at center,#063b5a 0%,#020914 42%,#000308 100%);
+ color:#dff8ff;font-family:Arial,sans-serif;overflow-x:hidden
 }
-
-body {
-    min-height: 100vh;
-    background:
-        radial-gradient(circle at center, #063b5a 0%, #020914 42%, #000308 100%);
-    color: #dff8ff;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-.app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 25px 18px;
-}
-
-.title {
-    font-size: 30px;
-    letter-spacing: 10px;
-    color: #00d9ff;
-    text-shadow: 0 0 10px #00d9ff, 0 0 30px #008cff;
-    margin-top: 10px;
-}
-
-.status {
-    margin-top: 8px;
-    font-size: 12px;
-    letter-spacing: 4px;
-    color: #73eaff;
-}
-
-.hud {
-    position: relative;
-    width: min(78vw, 330px);
-    height: min(78vw, 330px);
-    margin-top: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid #00cfff;
-    box-shadow:
-        0 0 10px #00cfff,
-        inset 0 0 15px #008cff;
-}
-
-.r1 {
-    width: 100%;
-    height: 100%;
-    animation: spin 12s linear infinite;
-}
-
-.r2 {
-    width: 82%;
-    height: 82%;
-    border-style: dashed;
-    animation: spinReverse 8s linear infinite;
-}
-
-.r3 {
-    width: 64%;
-    height: 64%;
-    animation: pulse 2s infinite;
-}
-
-.core {
-    width: 35%;
-    height: 35%;
-    border-radius: 50%;
-    background: radial-gradient(circle, #bfffff 0%, #00d9ff 25%, #006cff 60%, #00152a 100%);
-    box-shadow:
-        0 0 20px #00eaff,
-        0 0 60px #008cff,
-        0 0 100px #0066ff;
-    animation: pulse 1.5s infinite;
-}
-
-.panel {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 25px;
-    min-height: 90px;
-    padding: 16px;
-    border: 1px solid #008cff;
-    border-radius: 14px;
-    background: rgba(0, 20, 40, 0.65);
-    box-shadow: 0 0 20px rgba(0, 180, 255, 0.25);
-    text-align: center;
-}
-
-#output {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.controls {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 18px;
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    flex: 1;
-    min-height: 52px;
-    border-radius: 12px;
-    border: 1px solid #00cfff;
-    background: rgba(0, 100, 180, 0.2);
-    color: #dff8ff;
-    font-size: 15px;
-    font-weight: bold;
-    box-shadow: 0 0 15px rgba(0, 190, 255, 0.2);
-}
-
-button:active {
-    background: rgba(0, 190, 255, 0.45);
-    transform: scale(.97);
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spinReverse {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
-}
-
-@keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-}
+.app{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:22px 16px}
+.title{font-size:30px;letter-spacing:10px;color:#00d9ff;text-shadow:0 0 10px #00d9ff,0 0 30px #008cff;margin-top:8px}
+.status{margin-top:7px;font-size:12px;letter-spacing:4px;color:#73eaff}
+.hud{position:relative;width:min(72vw,310px);height:min(72vw,310px);margin-top:28px;display:flex;justify-content:center;align-items:center}
+.ring{position:absolute;border-radius:50%;border:2px solid #00cfff;box-shadow:0 0 10px #00cfff,inset 0 0 15px #008cff}
+.r1{width:100%;height:100%;animation:spin 12s linear infinite}
+.r2{width:82%;height:82%;border-style:dashed;animation:spinReverse 8s linear infinite}
+.r3{width:64%;height:64%;animation:pulse 2s infinite}
+.core{width:35%;height:35%;border-radius:50%;background:radial-gradient(circle,#bfffff 0%,#00d9ff 25%,#006cff 60%,#00152a 100%);box-shadow:0 0 20px #00eaff,0 0 60px #008cff,0 0 100px #0066ff;animation:pulse 1.5s infinite}
+.panel{width:100%;max-width:520px;margin-top:20px;min-height:105px;padding:16px;border:1px solid #008cff;border-radius:14px;background:rgba(0,20,40,.7);box-shadow:0 0 20px rgba(0,180,255,.25)}
+#output{font-size:16px;line-height:1.55;word-wrap:break-word}
+.controls{width:100%;max-width:520px;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{min-height:50px;border-radius:12px;border:1px solid #00cfff;background:rgba(0,100,180,.2);color:#dff8ff;font-size:14px;font-weight:bold;box-shadow:0 0 15px rgba(0,190,255,.2)}
+button:active{background:rgba(0,190,255,.45);transform:scale(.97)}
+.inputRow{width:100%;max-width:520px;display:flex;gap:8px;margin-top:10px}
+input{flex:1;min-width:0;padding:14px;border-radius:12px;border:1px solid #008cff;background:rgba(0,15,30,.8);color:#fff;font-size:15px;outline:none}
+.small{font-size:11px;color:#77cfe5;margin-top:10px;text-align:center}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes spinReverse{from{transform:rotate(360deg)}to{transform:rotate(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
+  <div class="title">JARVIS</div>
+  <div class="status" id="status">SYSTEM ONLINE</div>
 
-    <div class="title">JARVIS</div>
-    <div class="status" id="status">SYSTEM ONLINE</div>
+  <div class="hud">
+    <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="core"></div>
+  </div>
 
-    <div class="hud">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-        <div class="core"></div>
-    </div>
+  <div class="panel">
+    <div id="output">Hello. I am JARVIS.<br>Tap SPEAK or type a command.</div>
+  </div>
 
-    <div class="panel">
-        <div id="output">
-            Hello. I am JARVIS.<br>
-            Tap the microphone and speak.
-        </div>
-    </div>
+  <div class="controls">
+    <button onclick="startListening()">🎙️ SPEAK</button>
+    <button onclick="jarvisSearch()">🌐 SEARCH</button>
+    <button onclick="openYouTube()">▶️ YOUTUBE</button>
+    <button onclick="openGoogle()">🔎 GOOGLE</button>
+  </div>
 
-    <div class="controls">
-        <button onclick="startListening()">🎙️ SPEAK</button>
-        <button onclick="jarvisSearch()">🌐 SEARCH</button>
-    </div>
-
+  <div class="inputRow">
+    <input id="commandInput" placeholder="Type a command..." onkeydown="if(event.key==='Enter') runTypedCommand()">
+    <button onclick="runTypedCommand()">SEND</button>
+  </div>
+  <div class="small">Try: “hello”, “what is the time?”, “open youtube”, “search weather”, “who are you”</div>
 </div>
 
 <script>
+const output=document.getElementById("output");
+const statusText=document.getElementById("status");
+const input=document.getElementById("commandInput");
 
-const output = document.getElementById("output");
-const statusText = document.getElementById("status");
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognition=null;
 
-const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
+if(SpeechRecognition){
+  recognition=new SpeechRecognition();
+  recognition.continuous=false;
+  recognition.interimResults=false;
+  recognition.lang="en-IN";
 
-let recognition;
+  recognition.onstart=()=>{
+    statusText.innerText="LISTENING...";
+    output.innerText="I am listening...";
+  };
 
-if (SpeechRecognition) {
+  recognition.onresult=(event)=>{
+    const command=event.results[0][0].transcript.trim();
+    processCommand(command);
+  };
 
-    recognition = new SpeechRecognition();
+  recognition.onerror=()=>{
+    statusText.innerText="SYSTEM ONLINE";
+    output.innerText="I could not hear you. Please try again.";
+  };
 
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-IN";
-
-    recognition.onstart = function () {
-        statusText.innerText = "LISTENING...";
-        output.innerText = "I am listening...";
-    };
-
-    recognition.onresult = function (event) {
-
-        const command =
-            event.results[0][0].transcript;
-
-        output.innerHTML =
-            "<b>You:</b> " + command +
-            "<br><br><b>JARVIS:</b> ";
-
-        processCommand(command);
-    };
-
-    recognition.onerror = function () {
-
-        statusText.innerText = "SYSTEM ONLINE";
-
-        output.innerText =
-            "I could not hear you. Please try again.";
-    };
-
-    recognition.onend = function () {
-        statusText.innerText = "SYSTEM ONLINE";
-    };
-
-} else {
-
-    output.innerText =
-        "Speech recognition is not supported in this browser.";
+  recognition.onend=()=>statusText.innerText="SYSTEM ONLINE";
 }
 
-
-function startListening() {
-
-    if (!recognition) return;
-
-    recognition.start();
+function startListening(){
+  if(!recognition){
+    output.innerText="Speech recognition is not supported in this browser. Please type your command.";
+    return;
+  }
+  try{ recognition.start(); }catch(e){}
 }
 
-
-function processCommand(command) {
-
-    const text = command.toLowerCase();
-
-    let response = "";
-
-    if (
-        text.includes("hello") ||
-        text.includes("hi") ||
-        command.includes("नमस्कार")
-    ) {
-
-        response =
-            "Hello. I am JARVIS. How can I assist you?";
-
-    }
-
-    else if (
-        text.includes("who are you") ||
-        command.includes("तू कोण")
-    ) {
-
-        response =
-            "I am JARVIS, your personal AI assistant.";
-
-    }
-
-    else if (
-        text.includes("time") ||
-        command.includes("वेळ")
-    ) {
-
-        const now = new Date();
-
-        response =
-            "The current time is " +
-            now.toLocaleTimeString();
-
-    }
-
-    else if (
-        text.includes("date") ||
-        command.includes("तारीख")
-    ) {
-
-        const now = new Date();
-
-        response =
-            "Today is " +
-            now.toLocaleDateString();
-
-    }
-
-    else if (
-        text.includes("youtube")
-    ) {
-
-        response =
-            "Opening YouTube.";
-
-        speak(response);
-
-        setTimeout(() => {
-            window.open(
-                "https://www.youtube.com",
-                "_blank"
-            );
-        }, 700);
-
-        return;
-    }
-
-    else if (
-        text.includes("google")
-    ) {
-
-        response =
-            "Opening Google.";
-
-        speak(response);
-
-        setTimeout(() => {
-            window.open(
-                "https://www.google.com",
-                "_blank"
-            );
-        }, 700);
-
-        return;
-    }
-
-    else {
-
-        response =
-            "I heard you say: " +
-            command +
-            ". My AI brain will be connected in the next version.";
-
-    }
-
-    output.innerHTML =
-        "<b>You:</b> " + command +
-        "<br><br><b>JARVIS:</b> " +
-        response;
-
-    speak(response);
+function runTypedCommand(){
+  const command=input.value.trim();
+  if(!command)return;
+  input.value="";
+  processCommand(command);
 }
 
-
-function speak(text) {
-
-    if (!("speechSynthesis" in window))
-        return;
-
-    window.speechSynthesis.cancel();
-
-    const voice =
-        new SpeechSynthesisUtterance(text);
-
-    voice.lang = "en-IN";
-    voice.rate = 0.9;
-    voice.pitch = 0.9;
-    voice.volume = 1;
-
-    window.speechSynthesis.speak(voice);
+function show(command,response){
+  output.innerHTML="<b>You:</b> "+escapeHTML(command)+"<br><br><b>JARVIS:</b> "+response;
+  speak(stripHTML(response));
 }
 
+function processCommand(command){
+  const text=command.toLowerCase().trim();
+  let response="";
 
-function jarvisSearch() {
+  if(text.includes("hello")||text.includes("hi")||text.includes("hey")||text.includes("नमस्कार")||text.includes("हॅलो")||text.includes("हलो")){
+    response="Hello. I am JARVIS. How can I assist you?";
+  }
+  else if(text.includes("who are you")||text.includes("तू कोण")||text.includes("तुम कौन")){
+    response="I am JARVIS, your personal AI assistant.";
+  }
+  else if(text.includes("time")||text.includes("वेळ")||text.includes("समय")){
+    response="The current time is "+new Date().toLocaleTimeString();
+  }
+  else if(text.includes("date")||text.includes("तारीख")||text.includes("आजची तारीख")){
+    response="Today is "+new Date().toLocaleDateString();
+  }
+  else if(text.includes("youtube")||text.includes("यूट्यूब")){
+    response="Opening YouTube.";
+    show(command,response);
+    setTimeout(openYouTube,500);
+    return;
+  }
+  else if(text.includes("google")||text.includes("गूगल")){
+    response="Opening Google.";
+    show(command,response);
+    setTimeout(openGoogle,500);
+    return;
+  }
+  else if(text.startsWith("search ")||text.startsWith("find ")||text.includes("शोध")){
+    let query=command.replace(/^search\s+/i,"").replace(/^find\s+/i,"").trim();
+    if(!query) query=prompt("What should I search?");
+    if(query){
+      response="Searching the web for "+escapeHTML(query)+".";
+      show(command,response);
+      setTimeout(()=>webSearch(query),500);
+      return;
+    }
+  }
+  else if(text.includes("good morning")){
+    response="Good morning. JARVIS systems are online and ready.";
+  }
+  else if(text.includes("good night")){
+    response="Good night. JARVIS is standing by.";
+  }
+  else if(text.includes("thank")){
+    response="You're welcome. Always at your service.";
+  }
+  else if(text.includes("how are you")){
+    response="All systems are operational. Thank you for asking.";
+  }
+  else if(text.includes("clear")||text.includes("reset")){
+    output.innerHTML="Hello. I am JARVIS.<br>Ready for your next command.";
+    return;
+  }
+  else{
+    response="I heard you say: "+escapeHTML(command)+". This command is not connected to my AI brain yet.";
+  }
 
-    const query =
-        prompt("What should I search?");
-
-    if (!query)
-        return;
-
-    speak("Searching the web.");
-
-    window.open(
-        "https://www.google.com/search?q=" +
-        encodeURIComponent(query),
-        "_blank"
-    );
+  show(command,response);
 }
 
+function openYouTube(){
+  speak("Opening YouTube.");
+  window.open("https://www.youtube.com","_blank");
+}
+function openGoogle(){
+  speak("Opening Google.");
+  window.open("https://www.google.com","_blank");
+}
+function webSearch(query){
+  window.open("https://www.google.com/search?q="+encodeURIComponent(query),"_blank");
+}
+function jarvisSearch(){
+  const query=prompt("What should I search?");
+  if(query)webSearch(query);
+}
+function speak(text){
+  if(!("speechSynthesis" in window))return;
+  window.speechSynthesis.cancel();
+  const voice=new SpeechSynthesisUtterance(text);
+  voice.lang="en-IN"; voice.rate=.9; voice.pitch=.9; voice.volume=1;
+  window.speechSynthesis.speak(voice);
+}
+function stripHTML(text){
+  const d=document.createElement("div"); d.innerHTML=text; return d.textContent||d.innerText||"";
+}
+function escapeHTML(text){
+  return String(text).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
 </script>
-
 </body>
 </html>
-```
